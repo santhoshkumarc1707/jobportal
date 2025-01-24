@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const useGetAllJobs = () => {
     const dispatch = useDispatch();
-   
+    const { searchedQuery } = useSelector(store => store.job);
     const token = useSelector(state => state.auth.token);
 
     useEffect(() => {
         const fetchAllJobs = async () => {
             try {
-                const res = await axios.get(`${JOB_API_END_POINT}/get?keyword=${}`, {
+                const res = await axios.get(`${JOB_API_END_POINT}/get?keyword=${searchedQuery}`, {
                     headers: {
                         Authorization: `Bearer ${token}` // Add token to Authorization header
                     },
