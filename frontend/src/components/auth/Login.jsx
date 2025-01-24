@@ -7,7 +7,7 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '@/utils/constant';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading, setUser } from '@/redux/authSlice';
+import { setLoading, setUser,settoken } from '@/redux/authSlice';
 import { Loader2 } from 'lucide-react';
 import { Formik, Form, Field } from 'formik';
 import { Office, JobImg } from '@/assets';
@@ -37,7 +37,10 @@ const Login = () => {
                 }
             );
             if (res.data.success) {
+                console.log(res.data.token);
+
                 dispatch(setUser(res.data.user));
+                dispatch(settoken(res.data.token));
                 navigate('/');
                 toast.success(res.data.message);
             }
@@ -63,9 +66,8 @@ const Login = () => {
                     {({ values, handleChange }) => (
                         <div
                             style={{
-                                backgroundImage: `url(${
-                                    values.role === 'student' ? JobImg : Office
-                                })`,
+                                backgroundImage: `url(${values.role === 'student' ? JobImg : Office
+                                    })`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 height: '100vh',
@@ -83,11 +85,10 @@ const Login = () => {
                                             target: { name: 'role', value: 'student' },
                                         })
                                     }
-                                    className={`px-6 py-2 text-sm font-bold transition-colors duration-300 rounded-full ${
-                                        values.role === 'student'
+                                    className={`px-6 py-2 text-sm font-bold transition-colors duration-300 rounded-full ${values.role === 'student'
                                             ? 'bg-blue-600 text-white'
                                             : 'bg-gray-200 text-gray-600'
-                                    }`}
+                                        }`}
                                 >
                                     Student
                                 </button>
@@ -97,11 +98,10 @@ const Login = () => {
                                             target: { name: 'role', value: 'recruiter' },
                                         })
                                     }
-                                    className={`px-6 py-2 text-sm font-bold transition-colors duration-300 rounded-full ${
-                                        values.role === 'recruiter'
+                                    className={`px-6 py-2 text-sm font-bold transition-colors duration-300 rounded-full ${values.role === 'recruiter'
                                             ? 'bg-blue-600 text-white'
                                             : 'bg-gray-200 text-gray-600'
-                                    }`}
+                                        }`}
                                 >
                                     Recruiter
                                 </button>

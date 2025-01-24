@@ -16,6 +16,7 @@ import ProtectedRoute from './components/admin/ProtectedRoute'
 import DashboardOutlet from './components/DashboardOutlet/DashboardOutlet'
 
 
+
 const appRouter = createBrowserRouter([
   
   {
@@ -84,6 +85,8 @@ const appRouter = createBrowserRouter([
 
 ])
 function App() {
+
+
 
   return (
     <div>
