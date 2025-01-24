@@ -19,6 +19,7 @@ app.use(cookieParser());
 app.use(
     cors({
       origin: process.env.baseURl,
+      
       methods: ["GET", "POST", "DELETE", "PUT"],
       allowedHeaders: [
         "Content-Type",
@@ -30,7 +31,7 @@ app.use(
       credentials: true,
     })
   );
-const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 8080;
 
 
 // api's
