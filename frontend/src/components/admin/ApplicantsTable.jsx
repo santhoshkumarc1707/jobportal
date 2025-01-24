@@ -1,4 +1,3 @@
-
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { MoreHorizontal } from 'lucide-react';
@@ -11,12 +10,21 @@ const shortlistingStatus = ["Accepted", "Rejected"];
 
 const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application);
+    const token = useSelector(store => store.auth.token);  // Assuming token is stored in the auth slice of the Redux store
 
     const statusHandler = async (status, id) => {
-    
         try {
             axios.defaults.withCredentials = true;
-            const res = await axios.post(`${APPLICATION_API_END_POINT}/status/${id}/update`, { status });
+            const res = await axios.post(
+                `${APPLICATION_API_END_POINT}/status/${id}/update`, 
+                { status },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Add token to Authorization header
+                    },
+                    withCredentials: true, // Ensure cookies are sent with the request
+                }
+            );
             console.log(res);
             if (res.data.success) {
                 toast.success(res.data.message);

@@ -12,7 +12,7 @@ import { Loader2 } from 'lucide-react'
 
 
 const PostJob = () => {
-
+    const token=useSelector((state)=>state.auth.token);
     const [input, setInput] = useState({
         title: "",
         description: "",
@@ -43,6 +43,7 @@ const PostJob = () => {
             setLoading(true);
             const res = await axios.post(`${JOB_API_END_POINT}/post`, input,{
                 headers:{
+                    'Authorization': `Bearer ${token}`, 
                     'Content-Type':'application/json'
                 },
                 withCredentials:true

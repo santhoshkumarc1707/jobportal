@@ -20,11 +20,14 @@ const JobDescription = () => {
   const params = useParams();
   const jobId = params.id;
   const dispatch = useDispatch();
-
+  const token = useSelector((state) => state.auth.token);
   const applyJobHandler = async () => {
     try {
       const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}` // Add token to Authorization header
+        },
+        withCredentials: true, // Move this outside of the headers block
       });
 
       if (res.data.success) {
@@ -46,7 +49,10 @@ const JobDescription = () => {
     const fetchSingleJob = async () => {
       try {
         const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`, {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}` // Add token to Authorization header
+          },
+          withCredentials: true, // Move this outside of the headers block
         });
         if (res.data.success) {
           dispatch(setSingleJob(res.data.job));
@@ -61,12 +67,12 @@ const JobDescription = () => {
       }
     };
     fetchSingleJob();
-  }, [jobId, dispatch, user?._id]);
+  }, [jobId, dispatch, user?._id, token]);
 
   return (
     <div className="max-w-7xl mx-auto my-10 bg-white shadow-lg rounded-lg p-8">
       <div className="flex items-center justify-between mb-6">
-      <Button onClick={() => window.history.back()}>Back</Button>
+        <Button onClick={() => window.history.back()}>Back</Button>
         <div>
           <h1 className="font-bold text-2xl text-gray-800">{singleJob?.title}</h1>
           <div className="flex items-center gap-2 mt-4">
@@ -84,11 +90,10 @@ const JobDescription = () => {
         <Button
           onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
-          className={`rounded-lg transition ${
-            isApplied
+          className={`rounded-lg transition ${isApplied
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-purple-700 hover:bg-purple-600"
-          } text-white font-medium px-6 py-2`}
+            } text-white font-medium px-6 py-2`}
         >
           {isApplied ? "Already Applied" : "Apply Now"}
         </Button>
