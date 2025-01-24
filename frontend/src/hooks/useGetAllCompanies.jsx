@@ -16,7 +16,6 @@ const useGetAllCompanies = () => {
                     },
                     withCredentials: true, // Move this outside of the headers block
                 });
-                console.log('called');
                 if(res.data.success){
                     dispatch(setCompanies(res.data.companies));
                 }

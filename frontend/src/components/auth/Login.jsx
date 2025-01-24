@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -7,8 +7,8 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '@/utils/constant';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading, setUser,settoken } from '@/redux/authSlice';
-import { Loader2 } from 'lucide-react';
+import { setLoading, setUser, settoken } from '@/redux/authSlice';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { Formik, Form, Field } from 'formik';
 import { Office, JobImg } from '@/assets';
 
@@ -16,6 +16,7 @@ const Login = () => {
     const { loading, user } = useSelector((store) => store.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
 
     useEffect(() => {
         if (user) {
@@ -37,8 +38,6 @@ const Login = () => {
                 }
             );
             if (res.data.success) {
-                console.log(res.data.token);
-
                 dispatch(setUser(res.data.user));
                 dispatch(settoken(res.data.token));
                 navigate('/');
@@ -128,15 +127,25 @@ const Login = () => {
                                         required
                                     />
                                 </div>
-                                <div className="my-4">
+                                <div className="my-4 relative">
                                     <Label>Password</Label>
                                     <Field
                                         as={Input}
-                                        type="password"
+                                        type={showPassword ?   'password':'text'}
                                         name="password"
                                         placeholder="Enter your password"
                                         required
                                     />
+                                    <div
+                                        className="absolute inset-y-0 right-4 flex items-center justify-center  my-10  cursor-pointer"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                        {showPassword ? (
+                                            <EyeOff className="h-5 w-5 text-gray-500" />
+                                        ) : (
+                                            <Eye className="h-5 w-5 text-gray-500" />
+                                        )}
+                                    </div>
                                 </div>
                                 {loading ? (
                                     <Button className="w-full my-4">

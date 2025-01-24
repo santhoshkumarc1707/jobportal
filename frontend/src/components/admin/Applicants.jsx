@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 
 import ApplicantsTable from './ApplicantsTable'
 import axios from 'axios';
@@ -22,7 +22,7 @@ const Applicants = () => {
             }
         }
         fetchAllApplicants();
-    }, []);
+    }, [dispatch, params.id]);
     return (
         <div>
          

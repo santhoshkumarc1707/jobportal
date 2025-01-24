@@ -16,7 +16,6 @@ const useGetAppliedJobs = () => {
                     },
                     withCredentials: true, // Move this outside of the headers block
                 });
-                console.log(res.data);
                 if(res.data.success){
                     dispatch(setAllAppliedJobs(res.data.application));
                 }
