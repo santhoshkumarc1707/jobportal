@@ -131,7 +131,7 @@ const Login = () => {
                                     <Label>Password</Label>
                                     <Field
                                         as={Input}
-                                        type={showPassword ?   'password':'text'}
+                                        type={showPassword ? 'text':'password'}
                                         name="password"
                                         placeholder="Enter your password"
                                         required
